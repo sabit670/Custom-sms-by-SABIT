@@ -119,7 +119,7 @@ button:hover {
       status.innerText = "⏳ মেসেজ পাঠানো হচ্ছে...";
 
       try {
-        const res = await fetch("https://seversns.onrender.com", {
+        const res = await fetch("https://seversns-1.onrender.com", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ number, message })
