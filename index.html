@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom SMS By MR SABIT</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(to right, #f3f4f6, #e0f7fa);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  transition: background 0.5s ease-in-out;
+}
+
+h1 {
+  font-size: 32px;
+  color: #00796b;
+  margin-bottom: 20px;
+  animation: slideIn 1s ease-out;
+}
+
+.form-container {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+input:focus, textarea:focus {
+  border-color: #4ca1af;
+  transform: scale(1.02);
+}
+
+button {
+  padding: 12px 24px;
+  background: #4ca1af;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #00796b;
+  transform: scale(1.05);
+}
+
+#status {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #00796b;
+}
+
+.footer {
+  margin-top: 40px;
+  font-size: 14px;
+  font-family: monospace;
+  text-align: center;
+}
+
+.footer a {
+  color: #00796b;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+  </style>
+</head>
+<body>
+  <h1>Custom SMS By MR SABIT</h1>  <div class="form-container">
+    <input type="text" id="number" placeholder="📞 মোবাইল নাম্বার (01XXXXXXXXX)">
+    <textarea id="message" placeholder="💬 মেসেজ লিখুন..." rows="4"></textarea>
+    <button onclick="sendSMS()">📤 Send SMS</button>
+    <div id="status"></div>
+  </div>  <div class="footer">
+    Made by Sabit | Telegram: <a href="https://t.me/sabitcommunity" target="_blank">Sabit Community</a>
+  </div>  <script>
+    async function sendSMS() {
+      const number = document.getElementById("number").value;
+      const message = document.getElementById("message").value;
+      const status = document.getElementById("status");
+
+      if (!number || !message) {
+        status.innerText = "⚠️ অনুগ্রহ করে নাম্বার এবং মেসেজ দিন!";
+        return;
+      }
+
+      status.innerText = "⏳ মেসেজ পাঠানো হচ্ছে...";
+
+      try {
+        const res = await fetch("https://seversns.onrender.com", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ number, message })
+        });
+
+        const result = await res.json();
+        if (result.success) {
+          status.innerText = "✅ মেসেজ সফলভাবে পাঠানো হয়েছে!";
+        } else {
+          status.innerText = "❌ মেসেজ পাঠানো যায়নি: " + result.error;
+        }
+      } catch (err) {
+        status.innerText = "❌ সার্ভারে সমস্যা হয়েছে। আবার চেষ্টা করুন.";
+        console.error(err);
+      }
+    }
+  </script></body>
+</html>
